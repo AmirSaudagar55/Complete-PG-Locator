@@ -7,6 +7,9 @@ import Map from "../Map/Map";
 
 const AddLocation = ({ propertyDetails, setPropertyDetails, nextStep }) => {
   const { getAll } = useCountries();
+
+
+
   const form = useForm({
     initialValues: {
       country: propertyDetails?.country,
@@ -23,6 +26,7 @@ const AddLocation = ({ propertyDetails, setPropertyDetails, nextStep }) => {
 
 
   const { country, city, address } = form.values;
+  // const userEmail = user?.email;
 
 
   const handleSubmit = ()=> {

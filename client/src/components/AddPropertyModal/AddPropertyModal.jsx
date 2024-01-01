@@ -5,10 +5,19 @@ import { useAuth0 } from "@auth0/auth0-react";
 import UploadImage from "../UploadImage/UploadImage";
 import BasicDetails from "../BasicDetails/BasicDetails";
 import Facilities from "../Facilities/Facilities";
+import { useEffect } from "react";
 
-const AddPropertyModal = ({ opened, setOpened }) => {
+const AddPropertyModal = ({ opened, setOpened, currentUserMail }) => {
   const [active, setActive] = useState(0);
-  const { user } = useAuth0();
+  // const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
+
+  // const [userEmail, setuserEmail] = useState("")
+
+  
+  // useEffect(()=>{
+  //   setuserEmail(user?.email)
+  // },[isAuthenticated,opened])
 
   const [propertyDetails, setPropertyDetails] = useState({
     title: "",
@@ -23,7 +32,7 @@ const AddPropertyModal = ({ opened, setOpened }) => {
       parkings: 0,
       bathrooms: 0,
     },
-    userEmail: user?.email,
+    userEmail: "" //userEmail: isAuthenticated ? user?.email : '' ,
   });
 
   const nextStep = () => {

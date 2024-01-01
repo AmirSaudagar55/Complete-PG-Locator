@@ -17,9 +17,13 @@ const Header = () => {
   const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
   const { validateLogin } = useAuthCheck();
 
+  const[userEmail, setUserEmail] = useState("");
 
   const handleAddPropertyClick = () => {
     if (validateLogin()) {
+      console.log(typeof user?.email );
+      console.log(user?.email );
+      setUserEmail(user?.email);
       setModalOpened(true);
     }
   };
@@ -44,11 +48,12 @@ const Header = () => {
           >
             <NavLink to="/properties">Properties</NavLink>
 
-            <a href="mailto:zainkeepscode@gmail.com">Contact</a>
+            <a href="mailto:xyz@gmail.com">Contact</a>
 
             {/* add property */}
             <div onClick={handleAddPropertyClick}>Add Property</div>
-            <AddPropertyModal opened={modalOpened} setOpened={setModalOpened} />
+            <AddPropertyModal opened={modalOpened} setOpened={setModalOpened} currentUserMail={userEmail}/>
+            
             {/* login button */}
             {!isAuthenticated ? (
               <button className="button" onClick={loginWithRedirect}>

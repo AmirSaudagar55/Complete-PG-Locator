@@ -14,6 +14,10 @@ const Facilities = ({
   setOpened,
   setActiveStep,
 }) => {
+
+  const {user} = useAuth0()
+  
+
   const form = useForm({
     initialValues: {
       bedrooms: propertyDetails.facilities.bedrooms,
@@ -28,20 +32,22 @@ const Facilities = ({
   });
 
   const { bedrooms, parkings, bathrooms } = form.values;
+  const tempMail = user?.email;
 
   const handleSubmit = () => {
     const { hasErrors } = form.validate();
     if (!hasErrors) {
+      console.log("tempMail : "+tempMail)
       setPropertyDetails((prev) => ({
         ...prev,
-        facilities: { bedrooms, parkings, bathrooms },
+        facilities: { bedrooms, parkings, bathrooms }, userEmail : tempMail,
       }));
       mutate();
     }
   };
 
   // ==================== upload logic
-  const { user } = useAuth0();
+  
   const {
     userDetails: { token },
   } = useContext(UserDetailContext);
@@ -49,7 +55,7 @@ const Facilities = ({
 
   const {mutate, isLoading} = useMutation({
     mutationFn: ()=> createResidency({
-        ...propertyDetails, facilities: {bedrooms, parkings , bathrooms},
+        ...propertyDetails, facilities: {bedrooms, parkings , bathrooms},  userEmail : tempMail
     }, token),
     onError: ({ response }) => toast.error(response.data.message, {position: "bottom-right"}),
     onSettled: ()=> {
@@ -67,7 +73,7 @@ const Facilities = ({
           parkings: 0,
           bathrooms: 0,
         },
-        userEmail: user?.email,
+        userEmail: tempMail,
       })
       setOpened(false)
       setActiveStep(0)

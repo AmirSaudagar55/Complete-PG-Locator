@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { Outlet } from "react-router-dom";
@@ -10,6 +10,8 @@ import useFavourites from "../../hooks/useFavourites";
 import useBookings from "../../hooks/useBookings";
 
 const Layout = () => {
+
+  const [currMail, setCurrMail] = useState("");
 
   useFavourites()
   useBookings()
@@ -34,10 +36,14 @@ const Layout = () => {
       localStorage.setItem("access_token", res);
       setUserDetails((prev) => ({ ...prev, token: res }));
       mutate(res)
+      
     };
 
 
     isAuthenticated && getTokenAndRegsiter();
+    setCurrMail(user?.email)
+    console.log(user?.email)
+    console.log("/n currMail : " + currMail)
   }, [isAuthenticated]);
 
   return (
